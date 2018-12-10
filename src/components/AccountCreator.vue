@@ -80,8 +80,8 @@ export default class AccountCreator extends Vue {
     }
   }
 
-  public createAccount() {
-      if (this.firstname.length === 0  || this.firstname == null) {
+    public createAccount() {
+        if (this.firstname.length === 0  || this.firstname == null) {
         isMissing('Firstname');
       } else if (this.lastname.length === 0 || this.lastname == null) {
         isMissing('Lastname');
