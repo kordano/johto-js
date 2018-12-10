@@ -2,27 +2,19 @@
   <div>
     <h3>New Account</h3>
     <div>
-      <input v-model="firstname" placeholder="firstname">
-      <input v-model="lastname" placeholder="lastname">
-      <select v-model="level" placeholder="level">
+      <input v-model.trim="firstname" placeholder="firstname">
+      <input v-model.trim="lastname" placeholder="lastname">
+      <select v-model.number="level" placeholder="level">
         <option value="0">Other</option>
         <option value="1">Extern</option>
         <option value="2" selected>User</option>
         <option value="3">Admin</option>
       </select>
-      <input v-model="email" placeholder="email">
-      <input v-model="phone" placeholder="phone">
-      <input v-model="occupation" placeholder="occupation">
+      <input v-model.trim="email" placeholder="email">
+      <input v-model.trim="phone" placeholder="phone">
+      <input v-model.trim="occupation" placeholder="occupation">
     </div>
-    <div>
-      <p>Firstname: {{firstname}}</p>
-      <p>Lastname: {{lastname}}</p>
-      <p>Level: {{level}}</p>
-      <p>Email: {{email}}</p>
-      <p>Phone: {{phone}}</p>
-      <p>Occupation: {{occupation}}</p>
-    </div>
-    <button v-on:click='createAccount(firstname, lastname, level, email, phone, occupation)'>ADD</button>
+    <button v-on:click='createAccount()'>ADD</button>
   </div>
 </template>
 
@@ -38,45 +30,44 @@ function isMissing(s: string): void {
   alert(s + ' is missing!');
 }
 
-@Component({
-  methods: {
-    createAccount: (firstname: string,
-                    lastname: string,
-                    level: number,
-                    email: string,
-                    phone: string,
-                    occupation: string) => {
-      if (firstname.length === 0  || firstname == null) {
+@Component
+export default class AccountCreator extends Vue {
+  firstname = '';
+  lastname = '';
+  level = 0;
+  email = '';
+  phone = '';
+  occupation = '';
+
+  createAccount () {
+      if (this.firstname.length === 0  || this.firstname == null) {
         isMissing('Firstname');
-      } else if (lastname.length === 0 || lastname == null) {
+      } else if (this.lastname.length === 0 || this.lastname == null) {
         isMissing('Lastname');
-      } else if (email.length === 0 || email == null) {
+      } else if (this.email.length === 0 || this.email == null) {
         isMissing('Email');
-      } else if (phone.length === 0 || phone == null) {
+      } else if (this.phone.length === 0 || this.phone == null) {
         isMissing('Phone');
-      } else if (occupation.length === 0 || occupation == null) {
+      } else if (this.occupation.length === 0 || this.occupation == null) {
         isMissing('Occupation');
       } else {
         const account = new Account(uuid(),
-                                    level,
-                                    firstname.trim(),
-                                    lastname.trim(),
-                                    email.trim(),
-                                    phone.trim(),
-                                    occupation.trim(),
+                                    this.level,
+                                    this.firstname,
+                                    this.lastname,
+                                    this.email,
+                                    this.phone,
+                                    this.occupation,
                                     uuid());
         store.commit(CREATE_ACCOUNT, account);
+        this.firstname = '';
+        this.lastname = '';
+        this.level = 0;
+        this.email = '';
+        this.phone = '';
+        this.occupation = '';
       }
-    },
-  },
-})
-export default class AccountCreator extends Vue {
-  @Prop() private firstname!: string;
-  @Prop() private lastname!: string;
-  @Prop() private level!: number;
-  @Prop() private email!: string;
-  @Prop() private phone!: string;
-  @Prop() private occupation!: string;
+    }
 }
 
 </script>
