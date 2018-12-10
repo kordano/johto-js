@@ -1,5 +1,5 @@
 <template>
- <div>
+  <div>
   <AccountCreator></AccountCreator>
   <div>
     <h3>Counters</h3>
@@ -12,13 +12,18 @@
 import { Component, Vue } from 'vue-property-decorator';
 import AccountCreator from '@/components/AccountCreator.vue';
 import store from '@/store';
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
+import { CREATE_ACCOUNT } from '@/mutation-types';
 
 @Component({
   components: {
     AccountCreator,
   },
-  computed: mapState(['count'])
+  computed: {
+    count: () => {
+      return store.state.accounts.length;
+    }
+  }
 })
 export default class Accounts extends Vue {}
 </script>

@@ -22,22 +22,49 @@
       <p>Phone: {{phone}}</p>
       <p>Occupation: {{occupation}}</p>
     </div>
+    <button v-on:click='createAccount(firstname, lastname, level, email, phone, occupation)'>ADD</button>
   </div>
 </template>
 
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { AccountLevel } from '@/models/Account.ts';
+import { AccountLevel, Account } from '@/models/Account.ts';
+import store from '@/store';
+import { CREATE_ACCOUNT } from '@/mutation-types';
+import uuid from 'uuid/v4';
 
-@Component
+function isMissing(s: string): void {
+  alert(s + " is missing!");
+}
+
+@Component({
+  methods: {
+    createAccount: (firstname: string, lastname: string, level: number, email: string, phone: string, occupation: string) => {
+      let checkList: boolean[] = [];
+      if (firstname.length == 0  || firstname == null) {
+        isMissing("Firstname");
+      } else if (lastname.length == 0 || lastname == null) {
+        isMissing("Lastname");
+      } else if (email.length == 0 || email == null) {
+        isMissing("Email");
+      } else if (phone.length == 0 || phone == null) {
+        isMissing("Phone");
+      } else if (occupation.length == 0 || occupation == null) {
+        isMissing("Occupation");
+      } else {
+        store.commit(CREATE_ACCOUNT, new Account(uuid(), level, firstname.trim(), lastname.trim(), email.trim(), phone.trim(), occupation.trim(), uuid()));
+      }
+    },
+  },
+})
 export default class AccountCreator extends Vue {
-  @Prop() private firstname!: string;
-  @Prop() private lastname!: string;
-  @Prop() private level!: number;
-  @Prop() private email!: string;
-  @Prop() private phone!: string;
-  @Prop() private occupation!: string;
+  @Prop() private firstname: string = "";
+  @Prop() private lastname: string = "";
+  @Prop() private level: number = 0;
+  @Prop() private email: string = "";
+  @Prop() private phone: string = "";
+  @Prop() private occupation: string = "";
 }
 
 </script>
