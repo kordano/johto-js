@@ -21,14 +21,14 @@ import store from '@/store';
 import { mapState } from 'vuex';
 
 @Component({
-  computed: mapState(['toastMessage'])
+  computed: mapState(['toastMessage']),
 })
 
 export default class App extends Vue {
   get toastStatus(): string {
     const globalStatus = this.$store.state.toastStatus;
-    const toastStatus = ''
-    return 'toast toast'
+    const toastStatus = '';
+    return 'toast toast';
   }
 
 }

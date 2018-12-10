@@ -34,7 +34,7 @@ import store from '@/store';
 import { mapState } from 'vuex';
 
 @Component({
-  computed: mapState(['accounts'])
+  computed: mapState(['accounts']),
 })
 
 export default class AccountList extends Vue {}

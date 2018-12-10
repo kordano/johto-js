@@ -16,7 +16,7 @@ import { CREATE_ACCOUNT } from '@/mutation-types';
 @Component({
   components: {
     AccountCreator,
-    AccountList
+    AccountList,
   },
 })
 

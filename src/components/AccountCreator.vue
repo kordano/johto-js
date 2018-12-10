@@ -64,15 +64,15 @@ function isMissing(s: string): void {
 
 @Component
 export default class AccountCreator extends Vue {
-  modalStatus = 'modal';
-  firstname = '';
-  lastname = '';
-  level = 0;
-  email = '';
-  phone = '';
-  occupation = '';
+  public modalStatus = 'modal';
+  public firstname = '';
+  public lastname = '';
+  public level = 0;
+  public email = '';
+  public phone = '';
+  public occupation = '';
 
-  toggleModal () {
+  public toggleModal() {
     if (this.modalStatus === 'modal active') {
       this.modalStatus = 'modal';
     } else {
@@ -80,7 +80,7 @@ export default class AccountCreator extends Vue {
     }
   }
 
-  createAccount () {
+  public createAccount() {
       if (this.firstname.length === 0  || this.firstname == null) {
         isMissing('Firstname');
       } else if (this.lastname.length === 0 || this.lastname == null) {
