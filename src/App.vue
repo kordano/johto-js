@@ -7,8 +7,8 @@
       <router-link class="btn btn-link nav-link" to="/accounts">Accounts</router-link>
     </section>
   </header>
-  <div class="toast toast-primary">
-    <button class="btn btn-clear float-right"></button>
+  <div :class="toastStatus">
+    <button v-on:click="closeToast" class="btn btn-clear float-right"></button>
     {{toastMessage}}
   </div>
   <router-view/>
@@ -18,6 +18,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import store from '@/store';
+import { HIDE_TOAST } from '@/mutation-types';
 import { mapState } from 'vuex';
 
 @Component({
@@ -26,10 +27,15 @@ import { mapState } from 'vuex';
 
 export default class App extends Vue {
   get toastStatus(): string {
-    const globalStatus = this.$store.state.toastStatus;
-    const toastStatus = '';
-    return 'toast toast';
+    const toastColor = 'toast-' + this.$store.state.toastStatus;
+    const toastVisibility = this.$store.state.toastVisible ? '' : 'd-hide';
+    const toastCore = 'p-centered text-center toast';
+    const toastStatus =  toastCore + ' ' + toastColor + ' ' + toastVisibility;
+    return toastStatus;
   }
 
+  public closeToast() {
+    store.commit(HIDE_TOAST);
+  }
 }
 </script>

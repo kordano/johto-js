@@ -54,8 +54,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { AccountLevel, Account } from '@/models/Account.ts';
+import { ToastStatus } from '@/models/ViewHelpers.ts'; 
 import store from '@/store';
-import { CREATE_ACCOUNT } from '@/mutation-types';
+import { CREATE_ACCOUNT, SHOW_TOAST } from '@/mutation-types';
 import uuid from 'uuid/v4';
 
 function isMissing(s: string): void {
@@ -101,6 +102,7 @@ export default class AccountCreator extends Vue {
                                     this.occupation,
                                     uuid());
         store.commit(CREATE_ACCOUNT, account);
+        store.commit(SHOW_TOAST, "Account created!", ToastStatus.ERROR);
         this.firstname = '';
         this.lastname = '';
         this.level = 0;
